@@ -15,24 +15,17 @@ public class Task {
         High
     };
 
-    private Priority _priority;
-
-    public void SetPriority(Priority value) 
-    {
-        _priority = value;
-    }
-
-    public Priority GetPriority() {
-        return _priority;
-    }
+    public Priority PriorityLevels { get; set; }
 
     public bool IsCompleted { get; set; } = false;
+
+    public Task() {}
 
     public Task (string title, string description, DateOnly dueDate, Priority priority, bool isCompleted) {
         Title = title;
         Description = description;
         DueDate = dueDate;
-        _priority = priority;
+        PriorityLevels = priority;
         IsCompleted = isCompleted;
     }
 }
