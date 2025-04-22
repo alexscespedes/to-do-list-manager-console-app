@@ -15,7 +15,8 @@ public class taskManager {
 
         foreach (var t in taskList)
         {
-            Console.WriteLine($"Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Completed: {t.IsCompleted}");
+            string status = t.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($"Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
         }
     }
 }
