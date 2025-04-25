@@ -2,31 +2,48 @@ using static ToDoList.Task;
 
 namespace ToDoList;
 public class taskManager {
-    private List<Task> taskList = new List<Task>();
-
-    public void AddTask(string title, string description, DateOnly dueDate, Priority priority) {
-        if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+    List<Task> taskList = new List<Task>() 
+    {
+        new Task 
         {
-            Console.WriteLine("Error: Title and Description cannot be empty");
-            return;
-        }
-        if (TaskExists(title))
+            Title = "C-Sharp",
+            Description = "C# is a modern, innovative, open-source, cross-platform object-oriented programming language",
+            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            PriorityLevels = Task.Priority.High,
+        },
+        new Task 
         {
-            Console.WriteLine("The task already exists");
-            return;
+            Title = "JavaScript",
+            Description = "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions.",
+            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            PriorityLevels = Task.Priority.Medium,
+        },
+        new Task 
+        {
+            Title = "Azure Developer",
+            Description = "C Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
+            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            PriorityLevels = Task.Priority.Low,
+        },
+
+    };
+
+    public void ViewTasks() {
+        foreach (var t in taskList)
+        {
+            string status = t.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
         }
-
-        taskList.Add( new Task {
-            Title = title,
-            Description = description,
-            DueDate = dueDate,
-            PriorityLevels = priority
-        });
-
-        Console.WriteLine($"Task {title} succesfully added");
     }
 
-    private bool TaskExists(string title) {
-        return taskList.Exists(task => task.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+    public void RemoveTask(int id) {
+        var task = taskList.SingleOrDefault(t => t.Id == id);
+
+        if (task != null)
+        {
+            taskList.Remove(task);
+        }
     }
+
+    
 }

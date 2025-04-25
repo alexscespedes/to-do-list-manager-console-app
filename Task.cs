@@ -1,6 +1,10 @@
 namespace ToDoList;
 
 public class Task {
+    
+    static int nextId;
+    public int Id {get; private set;}
+
     public string Title { get; set; }
 
     public string Description { get; set; }
@@ -19,7 +23,9 @@ public class Task {
 
     public bool IsCompleted { get; set; } = false;
 
-    public Task() {}
+    public Task() {
+        Id = Interlocked.Increment(ref nextId);
+    }
 
     public Task (string title, string description, DateOnly dueDate, Priority priority, bool isCompleted) {
         Title = title;
