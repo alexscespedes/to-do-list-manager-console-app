@@ -45,5 +45,17 @@ public class taskManager {
         }
     }
 
+    public void MarkAsComplete (int id) {
+        var task = taskList.SingleOrDefault(t => t.Id == id);
+
+        if (task != null)
+        {
+            if (!task.IsCompleted)
+            {
+                task.IsCompleted = true;
+            }
+        }
+    }
+
     
 }

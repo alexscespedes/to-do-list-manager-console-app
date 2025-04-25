@@ -6,7 +6,7 @@ class Program {
     {
         var taskManager = new taskManager();
 
-        taskManager.RemoveTask(3);
+        taskManager.MarkAsComplete(3);
         taskManager.ViewTasks();
     }
 }
