@@ -57,5 +57,17 @@ public class taskManager {
         }
     }
 
-    
+    // Ask the user which filtering option want.
+
+    public void FilterTasksByPriority() {
+
+    }
+
+    public void FilterTasksByCompletionStatus() {
+
+    }
+
+    public void FilterTasksByDueDatw() {
+
+    }
 }
