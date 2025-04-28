@@ -57,34 +57,45 @@ public class taskManager {
         }
     }
 
-    public void FilterTasksByPriority(Priority userPriority) {
-        var tasksPriority = taskList.Where(t => t.PriorityLevels == userPriority);
+    public void FilterTask(int userInput) 
+    {
+        var tasksFiltered = new List<Task>();
+        if (userInput == 1)
+        {
+            // Console.Write("Enter the priority: ");
+            Priority userPriority = Priority.High;
+            tasksFiltered = FilterTasksByPriority(userPriority);
+        }
+        else if (userInput == 2)
+        {
+            // Console.Write("Enter the status: ");
+            bool userCompletionStatus = true;
+            tasksFiltered = FilterTasksByCompletionStatus(userCompletionStatus);
+        }
+        else if (userInput == 3)
+        {
+            // Console.Write("Enter the Date (yyyy-mm-dd): ");
+            DateOnly userDate = new DateOnly(2025, 04, 28);
+            tasksFiltered = FilterTasksByDueDate(userDate);
+        }
 
-        foreach (var t in tasksPriority)
+        foreach (var t in tasksFiltered)
         {
             string status = t.IsCompleted ? "Completed" : "Active";
             Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
         }
     }
 
-    public void FilterTasksByCompletionStatus(bool userCompletionStatus) {
-        var tasksCompletionStatus = taskList.Where(t => t.IsCompleted == userCompletionStatus);
-
-        foreach (var t in tasksCompletionStatus)
-        {
-            string status = t.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
-        }
+    public List<Task> FilterTasksByPriority(Priority userPriority) {
+       return taskList.Where(t => t.PriorityLevels == userPriority).ToList();
     }
 
-    public void FilterTasksByDueDate(DateOnly userDate) {
-        var tasksDueDate = taskList.Where(t => t.DueDate == userDate);
+    public List<Task> FilterTasksByCompletionStatus(bool userCompletionStatus) {
+       return taskList.Where(t => t.IsCompleted == userCompletionStatus).ToList();
+    }
 
-        foreach (var t in tasksDueDate)
-        {
-            string status = t.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
-        }
+    public List<Task> FilterTasksByDueDate(DateOnly userDate) {
+       return taskList.Where(t => t.DueDate == userDate).ToList();
     }
 
     public void SortByName(int userInput) {
@@ -120,6 +131,4 @@ public class taskManager {
             Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
         }
     }
-
-
 }

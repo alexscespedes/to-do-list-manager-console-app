@@ -6,13 +6,14 @@ class Program {
     {
         var taskManager = new taskManager();
 
-        // taskManager.MarkAsComplete(3);
+        taskManager.MarkAsComplete(3);
         // taskManager.ViewTasks();
         // taskManager.FilterTasksByPriority(Task.Priority.High);
         // taskManager.FilterTasksByCompletionStatus(true);
         // taskManager.FilterTasksByDueDate(new DateOnly(2025, 04, 28));
         // taskManager.SortByName(1);
-        taskManager.SortByDate(2);
+        // taskManager.SortByDate(2);
+        taskManager.FilterTask(3);
 
         /*
     1. Add a new task 
