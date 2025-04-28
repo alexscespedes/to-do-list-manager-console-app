@@ -104,7 +104,22 @@ public class taskManager {
         }
     }
 
-    // public void SortByDate(int userInput) {
+    public void SortByDate(int userInput) {
+        var tasksSortedByDate = new List<Task>();
+        if (userInput == 1) {
+            tasksSortedByDate = taskList.OrderBy(t => t.Title).ToList();
+        }
+        else if (userInput == 2)
+        {
+            tasksSortedByDate = taskList.OrderByDescending(t => t.Title).ToList();
+        }
 
-    // }
+        foreach (var t in tasksSortedByDate)
+        {
+            string status = t.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+        }
+    }
+
+
 }
