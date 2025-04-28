@@ -11,7 +11,8 @@ class Program {
         // taskManager.FilterTasksByPriority(Task.Priority.High);
         // taskManager.FilterTasksByCompletionStatus(true);
         // taskManager.FilterTasksByDueDate(new DateOnly(2025, 04, 28));
-        taskManager.SortByName(2);
+        // taskManager.SortByName(1);
+        taskManager.SortByDate(2);
 
         /*
     1. Add a new task 

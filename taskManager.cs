@@ -15,14 +15,14 @@ public class taskManager {
         {
             Title = "JavaScript",
             Description = "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions.",
-            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            DueDate = new DateOnly(2025, 04, 27),
             PriorityLevels = Task.Priority.Medium,
         },
         new Task 
         {
             Title = "Azure Developer",
             Description = "C Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
-            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            DueDate = new DateOnly(2025, 04, 26),
             PriorityLevels = Task.Priority.Low,
         },
 
@@ -107,11 +107,11 @@ public class taskManager {
     public void SortByDate(int userInput) {
         var tasksSortedByDate = new List<Task>();
         if (userInput == 1) {
-            tasksSortedByDate = taskList.OrderBy(t => t.Title).ToList();
+            tasksSortedByDate = taskList.OrderBy(t => t.DueDate).ToList();
         }
         else if (userInput == 2)
         {
-            tasksSortedByDate = taskList.OrderByDescending(t => t.Title).ToList();
+            tasksSortedByDate = taskList.OrderByDescending(t => t.DueDate).ToList();
         }
 
         foreach (var t in tasksSortedByDate)
