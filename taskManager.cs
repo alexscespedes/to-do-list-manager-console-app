@@ -57,8 +57,6 @@ public class taskManager {
         }
     }
 
-    // Ask the user which filtering option want.
-
     public void FilterTasksByPriority(Priority userPriority) {
         var tasksPriority = taskList.Where(t => t.PriorityLevels == userPriority);
 
@@ -88,4 +86,25 @@ public class taskManager {
             Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
         }
     }
+
+    public void SortByName(int userInput) {
+        var tasksSortedByName = new List<Task>();
+        if (userInput == 1) {
+            tasksSortedByName = taskList.OrderBy(t => t.Title).ToList();
+        }
+        else if (userInput == 2)
+        {
+            tasksSortedByName = taskList.OrderByDescending(t => t.Title).ToList();
+        }
+
+        foreach (var t in tasksSortedByName)
+        {
+            string status = t.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+        }
+    }
+
+    // public void SortByDate(int userInput) {
+
+    // }
 }
