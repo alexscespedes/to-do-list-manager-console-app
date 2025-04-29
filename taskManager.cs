@@ -9,24 +9,35 @@ public class taskManager {
             Title = "C-Sharp",
             Description = "C# is a modern, innovative, open-source, cross-platform object-oriented programming language",
             DueDate = DateOnly.FromDateTime(DateTime.Now),
-            PriorityLevels = Task.Priority.High,
+            PriorityLevels = Task.Priority.High
         },
         new Task 
         {
             Title = "JavaScript",
             Description = "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions.",
             DueDate = new DateOnly(2025, 04, 27),
-            PriorityLevels = Task.Priority.Medium,
+            PriorityLevels = Task.Priority.Medium
         },
         new Task 
         {
             Title = "Azure Developer",
             Description = "C Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
             DueDate = new DateOnly(2025, 04, 26),
-            PriorityLevels = Task.Priority.Low,
+            PriorityLevels = Task.Priority.Low
         },
 
     };
+
+    public void AddTask() {
+        taskList.Add( new Task {
+            Title = "Docker",
+            Description = "Docker is a software platform that allows you to build, test, and deploy applications quickly.",
+            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            PriorityLevels = Priority.Medium
+        });
+        SaveTasksToTextFile(taskList);
+        Console.WriteLine("Task successfully created");
+    }
 
     public void ViewTasks() {
         foreach (var t in taskList)
@@ -129,6 +140,25 @@ public class taskManager {
         {
             string status = t.IsCompleted ? "Completed" : "Active";
             Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+        }
+    }
+
+    public void SaveTasksToTextFile(List<Task> tasks) {
+        string filePath = "/home/alexsc03/Documents/Projects/DotNet/C-SharpConsoleApps/ToDoListManager/tasks.txt";
+        try
+        {
+            using (StreamWriter sw = new StreamWriter(filePath)) {
+                foreach (var t in taskList)
+                {
+                    string status = t.IsCompleted ? "Completed" : "Active";
+                    sw.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            
+            Console.WriteLine("Error saving tasks: " + e.Message);
         }
     }
 }
