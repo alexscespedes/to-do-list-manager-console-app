@@ -14,7 +14,11 @@ class Program {
         // taskManager.SortByName(1);
         // taskManager.SortByDate(2);
         // taskManager.FilterTask(3);
-        taskManager.AddTask();
+        // taskManager.AddTask();
+        // taskManager.AddTask();
+        taskManager.ReadTasksFromTextFile();
+        taskManager.ViewTasks();
+
 
         /*
     1. Add a new task 

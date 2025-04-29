@@ -28,6 +28,7 @@ public class Task {
     }
 
     public Task (string title, string description, DateOnly dueDate, Priority priority, bool isCompleted) {
+        Id = Interlocked.Increment(ref nextId);
         Title = title;
         Description = description;
         DueDate = dueDate;

@@ -1,32 +1,9 @@
+using System.Globalization;
 using static ToDoList.Task;
 
 namespace ToDoList;
 public class taskManager {
-    List<Task> taskList = new List<Task>() 
-    {
-        new Task 
-        {
-            Title = "C-Sharp",
-            Description = "C# is a modern, innovative, open-source, cross-platform object-oriented programming language",
-            DueDate = DateOnly.FromDateTime(DateTime.Now),
-            PriorityLevels = Task.Priority.High
-        },
-        new Task 
-        {
-            Title = "JavaScript",
-            Description = "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions.",
-            DueDate = new DateOnly(2025, 04, 27),
-            PriorityLevels = Task.Priority.Medium
-        },
-        new Task 
-        {
-            Title = "Azure Developer",
-            Description = "C Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
-            DueDate = new DateOnly(2025, 04, 26),
-            PriorityLevels = Task.Priority.Low
-        },
-
-    };
+    List<Task> taskList = new List<Task>();
 
     public void AddTask() {
         taskList.Add( new Task {
@@ -144,14 +121,15 @@ public class taskManager {
     }
 
     public void SaveTasksToTextFile(List<Task> tasks) {
-        string filePath = "/home/alexsc03/Documents/Projects/DotNet/C-SharpConsoleApps/ToDoListManager/tasks.txt";
+        string filePath = "C:/Users/AlexanderSencion/Downloads/Projects/to-do-list-manager-console-app/tasks.txt";
         try
         {
             using (StreamWriter sw = new StreamWriter(filePath)) {
-                foreach (var t in taskList)
+                sw.WriteLine("Id, Title, Description, DueDate, Priority, Status");
+                foreach (var t in tasks)
                 {
                     string status = t.IsCompleted ? "Completed" : "Active";
-                    sw.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+                    sw.WriteLine($"{t.Id}, {t.Title}, {t.Description}, {t.DueDate}, {t.PriorityLevels}, {status}");
                 }
             }
         }
@@ -160,5 +138,39 @@ public class taskManager {
             
             Console.WriteLine("Error saving tasks: " + e.Message);
         }
+    }
+
+    public void ReadTasksFromTextFile() {
+        string filePath = "C:/Users/AlexanderSencion/Downloads/Projects/to-do-list-manager-console-app/tasks.txt";
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine("No tasks file found. Starting with an empty list.");
+            return;
+        }
+
+        try
+        {
+            using (StreamReader file = new StreamReader(filePath)) 
+            {
+                string line;
+                string headerLine = file.ReadLine();                
+
+                while ((line = file.ReadLine()) != null) {
+                    string[] items = line.Split(',');
+                    if (items.Length >= 1)
+                    {
+                        taskList.Add(new Task(items[1], items[2], DateOnly.Parse("04/05/2025"), (Priority)Enum.Parse(typeof(Priority), items[4]), bool.Parse(items[5])));
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            
+            Console.WriteLine("Exception: " + e.Message);
+        }
+
+        Console.WriteLine("Read Successfully.");
     }
 }
