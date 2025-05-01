@@ -4,47 +4,19 @@ using static ToDoList.Task;
 
 namespace ToDoList;
 public class taskManager {
-    List<Task> taskList = new List<Task>(){
-        new Task 
-        {
-            Title = "C-Sharp",
-            Description = "C# is a modern, innovative, open-source, cross-platform object-oriented programming language",
-            DueDate = DateOnly.FromDateTime(DateTime.Now),
-            PriorityLevels = Task.Priority.High,
-        },
-        new Task 
-        {
-            Title = "JavaScript",
-            Description = "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions.",
-            DueDate = new DateOnly(2025, 04, 27),
-            PriorityLevels = Task.Priority.Medium,
-        },
-        new Task 
-        {
-            Title = "Azure Developer",
-            Description = "C Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
-            DueDate = new DateOnly(2025, 04, 26),
-            PriorityLevels = Task.Priority.Low,
-        },
-
-    };
+    List<Task> taskList = new List<Task>();
 
     public void AddTask() {
-        taskList.Add( new Task {
-            Title = "Docker",
-            Description = "Docker is a software platform that allows you to build, test, and deploy applications quickly.",
-            DueDate = DateOnly.FromDateTime(DateTime.Now),
-            PriorityLevels = Priority.Medium
-        });
+
         SaveTasksToTextFile(taskList);
         Console.WriteLine("Task successfully created");
     }
 
     public void ViewTasks() {
-        foreach (var t in taskList)
+        foreach (var task in taskList)
         {
-            string status = t.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+            string status = task.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
         }
     }
 
@@ -76,54 +48,42 @@ public class taskManager {
         {
             // Console.Write("Enter the priority: ");
             Priority userPriority = Priority.High;
-            tasksFiltered = FilterTasksByPriority(userPriority);
+            tasksFiltered = taskList.Where(t => t.PriorityLevels == userPriority).ToList();
         }
         else if (userInput == 2)
         {
             // Console.Write("Enter the status: ");
             bool userCompletionStatus = true;
-            tasksFiltered = FilterTasksByCompletionStatus(userCompletionStatus);
+            tasksFiltered = taskList.Where(t => t.IsCompleted == userCompletionStatus).ToList();
         }
         else if (userInput == 3)
         {
             // Console.Write("Enter the Date (yyyy-mm-dd): ");
             DateOnly userDate = new DateOnly(2025, 04, 28);
-            tasksFiltered = FilterTasksByDueDate(userDate);
+            tasksFiltered = taskList.Where(t => t.DueDate == userDate).ToList();
         }
 
-        foreach (var t in tasksFiltered)
+        foreach (var task in tasksFiltered)
         {
-            string status = t.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+            string status = task.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
         }
-    }
-
-    public List<Task> FilterTasksByPriority(Priority userPriority) {
-       return taskList.Where(t => t.PriorityLevels == userPriority).ToList();
-    }
-
-    public List<Task> FilterTasksByCompletionStatus(bool userCompletionStatus) {
-       return taskList.Where(t => t.IsCompleted == userCompletionStatus).ToList();
-    }
-
-    public List<Task> FilterTasksByDueDate(DateOnly userDate) {
-       return taskList.Where(t => t.DueDate == userDate).ToList();
     }
 
     public void SortByName(int userInput) {
         var tasksSortedByName = new List<Task>();
         if (userInput == 1) {
-            tasksSortedByName = taskList.OrderBy(t => t.Title).ToList();
+            tasksSortedByName = taskList.OrderBy(task => task.Title).ToList();
         }
         else if (userInput == 2)
         {
-            tasksSortedByName = taskList.OrderByDescending(t => t.Title).ToList();
+            tasksSortedByName = taskList.OrderByDescending(task => task.Title).ToList();
         }
 
-        foreach (var t in tasksSortedByName)
+        foreach (var task in tasksSortedByName)
         {
-            string status = t.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+            string status = task.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
         }
     }
 
@@ -137,10 +97,10 @@ public class taskManager {
             tasksSortedByDate = taskList.OrderByDescending(t => t.DueDate).ToList();
         }
 
-        foreach (var t in tasksSortedByDate)
+        foreach (var task in tasksSortedByDate)
         {
-            string status = t.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {t.Id} |Title: {t.Title}, Description: {t.Description}, DueDate: {t.DueDate}, Priority: {t.PriorityLevels}, Status: {status}");
+            string status = task.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
         }
     }
 
@@ -150,10 +110,9 @@ public class taskManager {
         {
             using (StreamWriter sw = new StreamWriter(filePath)) {
                 sw.WriteLine("Id, Title, Description, DueDate, Priority, Status");
-                foreach (var t in tasks)
+                foreach (var task in tasks)
                 {
-                    string status = t.IsCompleted ? "Completed" : "Active";
-                    sw.WriteLine($"{t.Id}, {t.Title}, {t.Description}, {t.DueDate}, {t.PriorityLevels}, {status}");
+                    sw.WriteLine($"{task.Id}, {task.Title}, {task.Description}, {task.DueDate}, {task.PriorityLevels}, {task.IsCompleted}");
                 }
             }
         }
@@ -177,8 +136,8 @@ public class taskManager {
         {
             using (StreamReader file = new StreamReader(filePath)) 
             {
-                string line;
-                string headerLine = file.ReadLine();                
+                string? line;
+                string? headerLine = file.ReadLine();                
 
                 while ((line = file.ReadLine()) != null) {
                     string[] items = line.Split(',');
