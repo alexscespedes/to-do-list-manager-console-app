@@ -1,9 +1,33 @@
 using System.Globalization;
+using System.Text.RegularExpressions;
 using static ToDoList.Task;
 
 namespace ToDoList;
 public class taskManager {
-    List<Task> taskList = new List<Task>();
+    List<Task> taskList = new List<Task>(){
+        new Task 
+        {
+            Title = "C-Sharp",
+            Description = "C# is a modern, innovative, open-source, cross-platform object-oriented programming language",
+            DueDate = DateOnly.FromDateTime(DateTime.Now),
+            PriorityLevels = Task.Priority.High,
+        },
+        new Task 
+        {
+            Title = "JavaScript",
+            Description = "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions.",
+            DueDate = new DateOnly(2025, 04, 27),
+            PriorityLevels = Task.Priority.Medium,
+        },
+        new Task 
+        {
+            Title = "Azure Developer",
+            Description = "C Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more.",
+            DueDate = new DateOnly(2025, 04, 26),
+            PriorityLevels = Task.Priority.Low,
+        },
+
+    };
 
     public void AddTask() {
         taskList.Add( new Task {
@@ -121,7 +145,7 @@ public class taskManager {
     }
 
     public void SaveTasksToTextFile(List<Task> tasks) {
-        string filePath = "C:/Users/AlexanderSencion/Downloads/Projects/to-do-list-manager-console-app/tasks.txt";
+        string filePath = "/home/alexsc03/Documents/Projects/DotNet/C-SharpConsoleApps/ToDoListManager/tasks.txt";
         try
         {
             using (StreamWriter sw = new StreamWriter(filePath)) {
@@ -141,7 +165,7 @@ public class taskManager {
     }
 
     public void ReadTasksFromTextFile() {
-        string filePath = "C:/Users/AlexanderSencion/Downloads/Projects/to-do-list-manager-console-app/tasks.txt";
+        string filePath = "/home/alexsc03/Documents/Projects/DotNet/C-SharpConsoleApps/ToDoListManager/tasks.txt";
 
         if (!File.Exists(filePath))
         {
@@ -172,5 +196,28 @@ public class taskManager {
         }
 
         Console.WriteLine("Read Successfully.");
+    }
+
+    public void SearchTaskByTitle(string title) {
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            Console.WriteLine("Error: the title cannot be empty");
+            return;
+        }
+
+        var tasksPartialSearched = taskList.Where(task => task.Title.StartsWith(title.Trim(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+        
+        if (tasksPartialSearched.Count == 0)
+        {
+            Console.WriteLine("Task not found");
+            return;
+        }
+
+        foreach (var task in tasksPartialSearched)
+        {
+            string status = task.IsCompleted ? "Completed" : "Active";
+            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
+        }
+
     }
 }
