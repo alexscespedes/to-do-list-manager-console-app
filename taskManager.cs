@@ -6,9 +6,12 @@ namespace ToDoList;
 public class taskManager {
     List<Task> taskList = new List<Task>();
 
-    public void AddTask() {
+    public void AddTask(Task task) {
 
-        SaveTasksToTextFile(taskList);
+        taskList.Add(task);
+
+
+        // SaveTasksToTextFile(taskList);
         Console.WriteLine("Task successfully created");
     }
 

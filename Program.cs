@@ -1,39 +1,87 @@
-﻿namespace ToDoList;
+﻿using Microsoft.VisualBasic;
+using static ToDoList.Task;
 
-class Program {
+namespace ToDoList;
+    class Program {
+        static void Main(string[] args)
+        {
+            var taskManager = new taskManager();
+            
+            bool exit = false;
 
-    static void Main(string[] args)
-    {
-        var taskManager = new taskManager();
+            while(!exit) {
+                Console.WriteLine("Welcome to the To-Do List Manager Console App");
+                Console.WriteLine("1. Add new task");
+                Console.WriteLine("2. Remove a task");
+                Console.WriteLine("3. Search by task title");
+                Console.WriteLine("4. Mark a task as completed");
+                Console.WriteLine("5. Display all tasks");
+                Console.WriteLine("6. Filter tasks");
+                Console.WriteLine("7. Sort tasks");
+                Console.WriteLine("8. Exit");
+                Console.Write("Choose an option");
 
-        taskManager.MarkAsComplete(3);
-        taskManager.ViewTasks();
-        // taskManager.FilterTasksByPriority(Task.Priority.High);
-        // taskManager.FilterTasksByCompletionStatus(true);
-        // taskManager.FilterTasksByDueDate(new DateOnly(2025, 04, 28));
-        // taskManager.SortByName(1);
-        // taskManager.SortByDate(2);
-        // taskManager.FilterTask(3);
-        taskManager.AddTask();
-        // taskManager.AddTask();
-        // taskManager.ReadTasksFromTextFile();
-        taskManager.SearchTaskByTitle("d");
+                if (!int.TryParse(Console.ReadLine(), out int userInput)) {
+                    Console.WriteLine("Invalid input! Please enter a valid integer");
+                    break;
+                }
 
+                switch(userInput) {
+                    case 1: 
+                        Console.WriteLine("Add Task.");
+                        AddNewTask(taskManager);
+                        taskManager.ViewTasks();
+                        break;
+                    case 8: 
+                        exit = true;
+                        break;
+                }
+            }
+        }
 
-        /*
-    1. Add a new task 
-    2. Remove a task 
-    3. Check if a task exists.
-    4. Display all tasks
-    5. Show total task
-    6. Filter tasks
-        - by priority
-        - completion status
-        - due date
-    7. Sort tasks
-        - name ascending
-        - due date (newest)
-    8. Exit
-        */
+        static void AddNewTask(taskManager taskManager) {
+            Console.Write("Enter task title: ");
+            string title = Console.ReadLine()!;
+
+            Console.Write("Enter task description: ");
+            string description = Console.ReadLine()!;
+
+            Console.Write("Enter task due date: ");
+            DateOnly dueDate = DateOnly.Parse(Console.ReadLine()!);
+            
+            Console.WriteLine("Enter task priority: ");
+            Console.WriteLine("1. High ");
+            Console.WriteLine("2. Mediun");
+            Console.WriteLine("3. Low ");
+            Console.Write("Choose an option");
+            if (!int.TryParse(Console.ReadLine(), out int taskPriority)) {
+                    Console.WriteLine("Invalid input! Please enter a valid integer");
+                    return;
+                }
+            Priority priority;
+            switch (taskPriority) {
+                    case 1:
+                        priority = Priority.High;
+                        break;
+                    case 2:
+                        priority = Priority.Medium;
+                        break;
+                    case 3:
+                        priority = Priority.Low;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option, created with the default priority (Medium).");
+                        priority = Priority.Medium;
+                        break;
+                    }
+
+            var newTask = new Task {
+                Title = title,
+                Description = description,
+                DueDate = dueDate,
+                PriorityLevels = priority
+            };            
+
+            taskManager.AddTask(newTask);
+        }
     }
-}
