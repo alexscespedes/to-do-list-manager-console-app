@@ -28,10 +28,27 @@ namespace ToDoList;
 
                 switch(userInput) {
                     case 1: 
-                        Console.WriteLine("Add Task.");
                         AddNewTask(taskManager);
                         taskManager.ViewTasks();
                         break;
+                    case 2:
+                        DeleteTask(taskManager);
+                        break;
+                    case 3: 
+                        SearchTask(taskManager);
+                        break;
+                    case 4:
+                        TaskAsCompleted(taskManager);
+                        break;
+                    case 5: 
+                        taskManager.ViewTasks();
+                        break;
+                    case 6:
+                        FilterTasks(taskManager);
+                        break; 
+                    case 7:
+                        SortTasks(taskManager);
+                        break;                                                                        
                     case 8: 
                         exit = true;
                         break;
@@ -86,6 +103,31 @@ namespace ToDoList;
         }
 
         static void DeleteTask(TaskManager taskManager) {
+            Console.WriteLine("Enter the id of the task to remove: ");
+            bool valid = int.TryParse(Console.ReadLine(), out int id);
+            if (!valid || id <= 0)
+            {
+                Console.WriteLine("Invalid Id entered.");
+                return;
+            }
+
+            taskManager.RemoveTask(id);
+        }
+
+        static void SearchTask(TaskManager taskManager) {
 
         }
+
+        static void TaskAsCompleted(TaskManager taskManager) {
+
+        }
+
+        static void FilterTasks(TaskManager taskManager) {
+
+        }
+
+        static void SortTasks(TaskManager taskManager) {
+
+        }
+
     }
