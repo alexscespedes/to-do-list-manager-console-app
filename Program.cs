@@ -5,7 +5,7 @@ namespace ToDoList;
     class Program {
         static void Main(string[] args)
         {
-            var taskManager = new taskManager();
+            var taskManager = new TaskManager();
             
             bool exit = false;
 
@@ -39,7 +39,7 @@ namespace ToDoList;
             }
         }
 
-        static void AddNewTask(taskManager taskManager) {
+        static void AddNewTask(TaskManager taskManager) {
             Console.Write("Enter task title: ");
             string title = Console.ReadLine()!;
 
@@ -83,5 +83,9 @@ namespace ToDoList;
             };            
 
             taskManager.AddTask(newTask);
+        }
+
+        static void DeleteTask(TaskManager taskManager) {
+
         }
     }
