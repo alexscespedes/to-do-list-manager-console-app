@@ -6,6 +6,7 @@ namespace ToDoList;
         static void Main(string[] args)
         {
             var taskManager = new TaskManager();
+            taskManager.ReadTasksFromTextFile();
             
             bool exit = false;
 
@@ -19,7 +20,7 @@ namespace ToDoList;
                 Console.WriteLine("6. Filter tasks");
                 Console.WriteLine("7. Sort tasks");
                 Console.WriteLine("8. Exit");
-                Console.Write("Choose an option");
+                Console.Write("Choose an option: ");
 
                 if (!int.TryParse(Console.ReadLine(), out int userInput)) {
                     Console.WriteLine("Invalid input! Please enter a valid integer");
@@ -35,7 +36,8 @@ namespace ToDoList;
                         DeleteTask(taskManager);
                         break;
                     case 3: 
-                        SearchTask(taskManager);
+                        // SearchTaskName(taskManager);
+                        taskManager.SearchTaskByTitle("D");
                         break;
                     case 4:
                         TaskAsCompleted(taskManager);
@@ -103,7 +105,7 @@ namespace ToDoList;
         }
 
         static void DeleteTask(TaskManager taskManager) {
-            Console.WriteLine("Enter the id of the task to remove: ");
+            Console.Write("Enter the id of the task to remove: ");
             bool valid = int.TryParse(Console.ReadLine(), out int id);
             if (!valid || id <= 0)
             {
@@ -114,20 +116,53 @@ namespace ToDoList;
             taskManager.RemoveTask(id);
         }
 
-        static void SearchTask(TaskManager taskManager) {
-
+        static void SearchTaskName(TaskManager taskManager) {
+            Console.Write("Enter title to search: ");
+            string searchName = Console.ReadLine()!;
+            taskManager.SearchTaskByTitle(searchName);
         }
 
         static void TaskAsCompleted(TaskManager taskManager) {
+            Console.Write("Enter the id of the task to mark as complete: ");
+            bool valid = int.TryParse(Console.ReadLine(), out int id);
+            if (!valid || id <= 0)
+            {
+                Console.WriteLine("Invalid Id entered.");
+                return;
+            }
 
+            taskManager.MarkAsComplete(id);
         }
 
         static void FilterTasks(TaskManager taskManager) {
+            Console.WriteLine("Enter the filter option: ");
+            Console.WriteLine("1. By Priority ");
+            Console.WriteLine("2. By Completion Status");
+            Console.WriteLine("3. By Due Date");
+            Console.Write("Choose an option: ");
 
+            if (!int.TryParse(Console.ReadLine(), out int filterOption)) {
+                    Console.WriteLine("Invalid input! Please enter a valid integer");
+                    return;
+                }
+
+            taskManager.FilterTask(filterOption);
         }
 
         static void SortTasks(TaskManager taskManager) {
+            Console.WriteLine("Enter the sort option: ");
+            Console.WriteLine("1. Name Ascending ");
+            Console.WriteLine("2. Name Desceding");
+            Console.WriteLine("3. Due Date Ascending");
+            Console.WriteLine("4. Due Date Descending");
+            Console.Write("Choose an option: ");
 
+            if (!int.TryParse(Console.ReadLine(), out int sortOption)) {
+                    Console.WriteLine("Invalid input! Please enter a valid integer");
+                    return;
+                }
+
+            taskManager.SortTasks(sortOption);
         }
 
     }
