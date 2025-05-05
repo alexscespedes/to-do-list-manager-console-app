@@ -43,6 +43,8 @@ public class TaskManager {
         {
             taskList.Remove(task);
         }
+        Console.WriteLine($"No task found with Id {id}");
+
     }
 
     public void MarkAsComplete (int id) {
@@ -54,7 +56,9 @@ public class TaskManager {
             {
                 task.IsCompleted = true;
             }
+            Console.WriteLine($"Task already completed");
         }
+        Console.WriteLine($"No task found with Id {id}");
     }
 
     public void FilterTask(int userInput) 
