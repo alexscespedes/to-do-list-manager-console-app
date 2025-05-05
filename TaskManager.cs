@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Microsoft.VisualBasic;
 using static ToDoList.Task;
 
 namespace ToDoList;
@@ -7,6 +8,12 @@ public class TaskManager {
     private List<Task> taskList = new List<Task>();
 
     public void AddTask(Task task) {
+
+        if (string.IsNullOrWhiteSpace(task.Title) || string.IsNullOrWhiteSpace(task.Description))
+        {
+            Console.WriteLine("Error: Name or Description cannot be empty");
+            return;
+        }
 
         taskList.Add(task);
         SaveTasksToTextFile(taskList);
@@ -55,18 +62,18 @@ public class TaskManager {
         var tasksFiltered = new List<Task>();
         switch (userInput) {
                 case 1:
-                    Console.WriteLine("Enter the filter value: ");
+                    Console.Write("Enter the filter value: ");
                     Priority userPriority = (Priority)Enum.Parse(typeof(Priority), Console.ReadLine()!);
                     tasksFiltered = taskList.Where(task => task.PriorityLevels == userPriority).ToList();
                     break;
                 case 2:
-                    Console.WriteLine("Enter the filter value: ");
+                    Console.Write("Enter the filter value: ");
                     bool userStatus = bool.Parse(Console.ReadLine()!);
                     tasksFiltered = taskList.Where(task => task.IsCompleted == userStatus).ToList();
                     // priority = Priority.Medium;
                     break;
                 case 3:
-                    Console.WriteLine("Enter the filter value: ");
+                    Console.Write("Enter the filter value: ");
                     DateOnly userDueDate = DateOnly.Parse(Console.ReadLine()!);
                     tasksFiltered = taskList.Where(task => task.DueDate == userDueDate).ToList();
                     // priority = Priority.Low;
@@ -109,7 +116,7 @@ public class TaskManager {
                 sw.WriteLine("Id, Title, Description, DueDate, Priority, Status");
                 foreach (var task in tasks)
                 {
-                    sw.WriteLine($"{task.Id}, {task.Title}, {task.Description}, {task.DueDate}, {task.PriorityLevels}, {task.IsCompleted}");
+                    sw.WriteLine($"{task.Id},{task.Title},{task.Description},{task.DueDate},{task.PriorityLevels},{task.IsCompleted}");
                 }
             }
         }
@@ -139,7 +146,7 @@ public class TaskManager {
                     string[] items = line.Split(',');
                     if (items.Length >= 1)
                     {
-                        taskList.Add(new Task(items[1], items[2], DateOnly.Parse("04/05/2025"), (Priority)Enum.Parse(typeof(Priority), items[4]), bool.Parse(items[5])));
+                        taskList.Add(new Task(items[1], items[2], DateOnly.Parse(items[3]), (Priority)Enum.Parse(typeof(Priority), items[4]), bool.Parse(items[5])));
                     }
                 }
             }

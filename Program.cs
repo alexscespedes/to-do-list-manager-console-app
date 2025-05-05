@@ -36,8 +36,7 @@ namespace ToDoList;
                         DeleteTask(taskManager);
                         break;
                     case 3: 
-                        // SearchTaskName(taskManager);
-                        taskManager.SearchTaskByTitle("D");
+                        SearchTaskName(taskManager);
                         break;
                     case 4:
                         TaskAsCompleted(taskManager);
