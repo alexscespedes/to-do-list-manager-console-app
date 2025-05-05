@@ -30,7 +30,6 @@ namespace ToDoList;
                 switch(userInput) {
                     case 1: 
                         AddNewTask(taskManager);
-                        taskManager.ViewTasks();
                         break;
                     case 2:
                         DeleteTask(taskManager);
@@ -60,18 +59,27 @@ namespace ToDoList;
         static void AddNewTask(TaskManager taskManager) {
             Console.Write("Enter task title: ");
             string title = Console.ReadLine()!;
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                Console.WriteLine("Name cannot be empty");
+                return;
+            }
 
             Console.Write("Enter task description: ");
             string description = Console.ReadLine()!;
 
             Console.Write("Enter task due date: ");
-            DateOnly dueDate = DateOnly.Parse(Console.ReadLine()!);
+            if (!DateOnly.TryParse(Console.ReadLine(), out DateOnly dueDate))
+            {
+                Console.WriteLine("Invalid DateOnly Format");
+                return;
+            }
             
             Console.WriteLine("Enter task priority: ");
             Console.WriteLine("1. High ");
             Console.WriteLine("2. Mediun");
             Console.WriteLine("3. Low ");
-            Console.Write("Choose an option");
+            Console.Write("Choose an option: ");
             if (!int.TryParse(Console.ReadLine(), out int taskPriority)) {
                     Console.WriteLine("Invalid input! Please enter a valid integer");
                     return;

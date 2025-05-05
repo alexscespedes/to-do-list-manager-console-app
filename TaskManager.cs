@@ -9,12 +9,6 @@ public class TaskManager {
 
     public void AddTask(Task task) {
 
-        if (string.IsNullOrWhiteSpace(task.Title) || string.IsNullOrWhiteSpace(task.Description))
-        {
-            Console.WriteLine("Error: Name or Description cannot be empty");
-            return;
-        }
-
         taskList.Add(task);
         SaveTasksToTextFile(taskList);
         Console.WriteLine("Task successfully created");
