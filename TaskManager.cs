@@ -61,20 +61,34 @@ public class TaskManager {
         switch (userInput) {
                 case 1:
                     Console.Write("Enter the filter value: ");
-                    Priority userPriority = (Priority)Enum.Parse(typeof(Priority), Console.ReadLine()!);
-                    tasksFiltered = taskList.Where(task => task.PriorityLevels == userPriority).ToList();
+                    if (!Enum.TryParse(typeof(Priority), Console.ReadLine(), true, out object? userPriority))
+                    {
+                        Console.WriteLine("Invalid priority input.");
+                        return;
+                    }
+                    // I have to use this many time, time to refactor...
+                    tasksFiltered = taskList.Where(task => task.PriorityLevels == (Priority)userPriority!).ToList();
+                    if (tasksFiltered.Count == 0)
+                    {
+                        Console.WriteLine("No task found");
+                    }
                     break;
                 case 2:
                     Console.Write("Enter the filter value: ");
-                    bool userStatus = bool.Parse(Console.ReadLine()!);
+                    if (!bool.TryParse(Console.ReadLine(), out bool userStatus))
+                    {
+                        Console.WriteLine("Invalid status Format");
+                    }
                     tasksFiltered = taskList.Where(task => task.IsCompleted == userStatus).ToList();
-                    // priority = Priority.Medium;
                     break;
                 case 3:
                     Console.Write("Enter the filter value: ");
-                    DateOnly userDueDate = DateOnly.Parse(Console.ReadLine()!);
+                    if (!DateOnly.TryParse(Console.ReadLine(), out DateOnly userDueDate))
+                    {
+                        Console.WriteLine("Invalid DateOnly Format");
+                        return;
+                    }
                     tasksFiltered = taskList.Where(task => task.DueDate == userDueDate).ToList();
-                    // priority = Priority.Low;
                     break;
                 default:
                     Console.WriteLine("Invalid option, Please enter a valid one.");
