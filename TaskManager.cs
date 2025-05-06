@@ -6,7 +6,7 @@ using static ToDoList.Task;
 namespace ToDoList;
 public class TaskManager {
     private List<Task> taskList = new List<Task>();
-
+    HelperMethods helper = new HelperMethods();
     public void AddTask(Task task) {
 
         taskList.Add(task);
@@ -66,12 +66,14 @@ public class TaskManager {
                         Console.WriteLine("Invalid priority input.");
                         return;
                     }
-                    // I have to use this many time, time to refactor...
+                    
                     tasksFiltered = taskList.Where(task => task.PriorityLevels == (Priority)userPriority!).ToList();
+                    // I have to use this many time, time to refactor...
                     if (tasksFiltered.Count == 0)
                     {
                         Console.WriteLine("No task found");
                     }
+                    helper.CheckIfEmpty(tasksFiltered);
                     break;
                 case 2:
                     Console.Write("Enter the filter value: ");
@@ -80,6 +82,7 @@ public class TaskManager {
                         Console.WriteLine("Invalid status Format");
                     }
                     tasksFiltered = taskList.Where(task => task.IsCompleted == userStatus).ToList();
+                    helper.CheckIfEmpty(tasksFiltered);
                     break;
                 case 3:
                     Console.Write("Enter the filter value: ");
@@ -89,6 +92,7 @@ public class TaskManager {
                         return;
                     }
                     tasksFiltered = taskList.Where(task => task.DueDate == userDueDate).ToList();
+                    helper.CheckIfEmpty(tasksFiltered);
                     break;
                 default:
                     Console.WriteLine("Invalid option, Please enter a valid one.");
@@ -179,13 +183,10 @@ public class TaskManager {
         }
         
         var tasksPartialSearched = taskList.Where(task => task.Title.StartsWith(title.Trim(), StringComparison.InvariantCultureIgnoreCase)).ToList();
-        
-        if (tasksPartialSearched.Count == 0)
-        {
-            Console.WriteLine("Task not found");
-            return;
-        }
+
+        helper.CheckIfEmpty(tasksPartialSearched);
 
         ViewMutatedTasks(tasksPartialSearched);
     }
+
 }
