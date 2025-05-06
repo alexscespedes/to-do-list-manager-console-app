@@ -77,7 +77,7 @@ namespace ToDoList;
             
             Console.WriteLine("Enter task priority: ");
             Console.WriteLine("1. High ");
-            Console.WriteLine("2. Mediun");
+            Console.WriteLine("2. Medium");
             Console.WriteLine("3. Low ");
             Console.Write("Choose an option: ");
             if (!int.TryParse(Console.ReadLine(), out int taskPriority)) {
@@ -159,7 +159,7 @@ namespace ToDoList;
         static void SortTasks(TaskManager taskManager) {
             Console.WriteLine("Enter the sort option: ");
             Console.WriteLine("1. Name Ascending ");
-            Console.WriteLine("2. Name Desceding");
+            Console.WriteLine("2. Name Descending");
             Console.WriteLine("3. Due Date Ascending");
             Console.WriteLine("4. Due Date Descending");
             Console.Write("Choose an option: ");
