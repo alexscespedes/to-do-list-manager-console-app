@@ -9,4 +9,9 @@ public class HelperMethods {
         }
         return false;
     }
+
+    public void PrintTask(Task task) {
+        string status = task.IsCompleted ? "Completed" : "Active";
+        Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}"); 
+    }
 }

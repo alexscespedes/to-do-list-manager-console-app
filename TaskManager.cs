@@ -12,16 +12,14 @@ public class TaskManager {
     public void ViewTasks() {
         foreach (var task in taskList)
         {
-            string status = task.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
+            helper.PrintTask(task);
         }
     }
 
-        public void ViewMutatedTasks(List<Task> tasks) {
+    public void ViewMutatedTasks(List<Task> tasks) {
         foreach (var task in tasks)
         {
-            string status = task.IsCompleted ? "Completed" : "Active";
-            Console.WriteLine($" ID: {task.Id} |Title: {task.Title}, Description: {task.Description}, DueDate: {task.DueDate}, Priority: {task.PriorityLevels}, Status: {status}");
+            helper.PrintTask(task);
         }
     }
 
