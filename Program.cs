@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using static ToDoList.Task;
-
-namespace ToDoList;
+﻿namespace ToDoList;
     class Program {
         static void Main(string[] args)
         {

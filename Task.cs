@@ -11,14 +11,6 @@ public class Task {
 
     public DateOnly DueDate { get; set; }
 
-    public enum Priority
-    {
-        Low,
-        Medium,
-
-        High
-    };
-
     public Priority PriorityLevels { get; set; }
 
     public bool IsCompleted { get; set; } = false;
