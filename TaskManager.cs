@@ -79,7 +79,7 @@ public class TaskManager {
                     Console.Write("Enter the filter value: ");
                     if (!bool.TryParse(Console.ReadLine(), out bool userStatus))
                     {
-                        Console.WriteLine("Invalid status Format");
+                        Console.WriteLine("Invalid status format");
                     }
                     tasksFiltered = taskList.Where(task => task.IsCompleted == userStatus).ToList();
                     helper.CheckIfEmpty(tasksFiltered);
@@ -88,14 +88,14 @@ public class TaskManager {
                     Console.Write("Enter the filter value: ");
                     if (!DateOnly.TryParse(Console.ReadLine(), out DateOnly userDueDate))
                     {
-                        Console.WriteLine("Invalid DateOnly Format");
+                        Console.WriteLine("Invalid dateOnly format");
                         return;
                     }
                     tasksFiltered = taskList.Where(task => task.DueDate == userDueDate).ToList();
                     helper.CheckIfEmpty(tasksFiltered);
                     break;
                 default:
-                    Console.WriteLine("Invalid option, Please enter a valid one.");
+                    Console.WriteLine("Invalid option, please enter a valid one.");
                     break;
         }
         ViewMutatedTasks(tasksFiltered);
@@ -117,7 +117,7 @@ public class TaskManager {
                 tasksSorted = taskList.OrderByDescending(t => t.DueDate).ToList();
                 break;
             default:
-                Console.WriteLine("Invalid option, Please enter a valid one.");
+                Console.WriteLine("Invalid option, please enter a valid one.");
                 break;
         }
 
@@ -178,7 +178,7 @@ public class TaskManager {
 
     public void SearchTaskByTitle(string title) {
         if (string.IsNullOrWhiteSpace(title)) {
-            Console.WriteLine("Error: the title cannot be empty");
+            Console.WriteLine("The title cannot be empty");
             return;
         }
         
