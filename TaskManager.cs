@@ -188,7 +188,7 @@ public class TaskManager {
             return;
         }
         
-        var tasksPartialSearched = taskList.Where(task => task.Title.StartsWith(title.Trim(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+        var tasksPartialSearched = taskList.Where(task => task.Title.Contains(title.Trim(), StringComparison.InvariantCultureIgnoreCase)).ToList();
 
         helper.CheckIfEmpty(tasksPartialSearched);
 
