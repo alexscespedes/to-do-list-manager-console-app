@@ -36,6 +36,7 @@ public class TaskManager {
         if (task != null)
         {
             taskList.Remove(task);
+            return;
         }
         Console.WriteLine($"No task found with Id {id}");
 
@@ -49,8 +50,13 @@ public class TaskManager {
             if (!task.IsCompleted)
             {
                 task.IsCompleted = true;
+                return;
             }
-            Console.WriteLine($"Task already completed");
+            else 
+            {
+                Console.WriteLine($"Task already completed");
+                return;
+            }
         }
         Console.WriteLine($"No task found with Id {id}");
     }
